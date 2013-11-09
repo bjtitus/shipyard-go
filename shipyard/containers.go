@@ -1,20 +1,27 @@
 package shipyard
 
 type Container struct {
-    containerId string
-    description string
-    host        string
-    resourceUri string
+    Id              int `json:"id"`
+    ContainerID     string `json:"container_id"`
+    Description     string `json:"description"`
+    Protected       bool `json:"protected"`
+    Meta            ContainerInfoMeta
 }
 
-type ContainerManager struct {
+type ContainerInfoMeta struct {
+    Args        []string
+    Config      ContainerConfig
+    Created     string
 }
+type ContainerConfig struct {
+    Cmd         []string
+    CpuShares   int
+    Env         []string
+    Hostname    string
+    Image       string
+    Memory      int
+    MemorySwap  int
+    PortSpecs   []string
+    Privileged  bool
 
-func NewContainerManager() (*ContainerManager, error) {
-    mgr := &ContainerManager{}
-    return mgr, nil
-}
-
-func (mgr *ContainerManager) ContainerInfo() (string, error) {
-    return "Container Info 12345", nil
 }
