@@ -1,9 +1,9 @@
 package shipyard
 
 import (
-    "fmt"
+	"fmt"
 )
 
 func Authenticate() {
-    fmt.Println("shipyard.Authenticate")
+	fmt.Println("shipyard.Authenticate")
 }

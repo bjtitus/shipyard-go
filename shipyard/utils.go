@@ -1,11 +1,11 @@
 package shipyard
 
 import (
-    "log"
-    "fmt"
+	"fmt"
+	"log"
 )
 
 func LogMessage(prefix string, message ...string) {
-    log.SetPrefix(fmt.Sprintf("%s: ", prefix))
-    log.Println(message)
+	log.SetPrefix(fmt.Sprintf("%s: ", prefix))
+	log.Println(message)
 }
