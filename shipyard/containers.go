@@ -1,10 +1,11 @@
 package shipyard
 
 type Container struct {
-    Id              int `json:"id"`
+    ID              int `json:"id"`
     ContainerID     string `json:"container_id"`
     Description     string `json:"description"`
     Protected       bool `json:"protected"`
+    ResourceURI     string `json:"resource_uri"`
     Meta            ContainerInfoMeta
 }
 

@@ -26,6 +26,11 @@ type ContainerMeta struct {
     Objects []Container `json:"objects"`
 }
 
+type HostMeta struct {
+    Meta
+    Objects []Host `json:"objects"`
+}
+
 type API struct {
     username        string
     apiKey          string
@@ -73,6 +78,13 @@ func (api *API) GetApplications() (AppMeta, error) {
 func (api *API) GetContainers() (ContainerMeta, error) {
     resp, _ := api.makeRequest("/containers/", "GET")
     var data ContainerMeta
+    err := json.Unmarshal(resp, &data)
+    return data, err
+}
+
+func (api *API) GetHosts() (HostMeta, error) {
+    resp, _ := api.makeRequest("/hosts/", "GET")
+    var data HostMeta
     err := json.Unmarshal(resp, &data)
     return data, err
 }
