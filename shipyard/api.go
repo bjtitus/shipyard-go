@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 )
 
 type Meta struct {
@@ -14,6 +15,13 @@ type Meta struct {
 	offset     int
 	previous   int
 	totalCount int `json:"total_count,string"`
+}
+
+type UserMeta struct {
+	ApiKey   string `json:"api_key"`
+	Email    string
+	Status   string
+	Username string
 }
 
 type AppMeta struct {
@@ -73,6 +81,22 @@ func (api *API) makeRequest(path string, method string) ([]byte, int) {
 func (api *API) GetInfo() string {
 	info := "Info"
 	return info
+}
+
+func (api *API) Login(baseUrl string, username string, password string) (UserMeta, error) {
+	loginUrl := fmt.Sprintf("%v/api/login", baseUrl)
+	resp, err := http.PostForm(loginUrl, url.Values{"username": {username}, "password": {password}})
+	if err != nil {
+		log.Panic(err)
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Panic(err)
+	}
+	var data UserMeta
+	e := json.Unmarshal(body, &data)
+	return data, e
 }
 
 func (api *API) GetApplications() (AppMeta, error) {
